@@ -1,0 +1,92 @@
+Opis Strony
+Strona internetowa umożliwia użytkownikom zarządzanie dostępem do dokumentów oraz ich przeglądanie w zależności od przydzielonych uprawnień. Administrator ma możliwość przypisywania lub odbierania dostępu do dokumentów dla poszczególnych użytkowników poprzez panel administracyjny. Zwykli użytkownicy mogą przeglądać jedynie dokumenty, do których mają dostęp.
+
+
+
+Zasady Programowania SOLID
+Strona została zaprojektowana zgodnie z zasadami SOLID, co zapewnia przejrzystość, łatwość rozbudowy i utrzymania kodu:
+
+    Single Responsibility Principle (SRP)
+    Każda klasa ma tylko jedno odpowiedzialne zadanie:
+        Page odpowiada za generowanie szkieletu strony.
+        AdminPage obsługuje panel administracyjny.
+        UserPage obsługuje stronę użytkownika.
+        UserData zajmuje się interakcją z bazą danych.
+
+    Open/Closed Principle (OCP)
+		Kod można rozszerzać o nowe funkcjonalności (np. dodanie nowych dokumentów) bez potrzeby modyfikowania istniejących klas.
+		Dodawanie nowych dokumentów odbywa się przez stworzenie nowej klasy która dzieczy po klasie FormFiller.
+
+    Liskov Substitution Principle (LSP)
+		Klasy AdminPage i UserPage dziedziczą po Page i mogą być używane w zamian bez zmiany zachowania.
+		Kolejne dokumenty dziedziczące po FormFiller mogą mieć zaprogramowane własne zachowania.
+
+    Interface Segregation Principle (ISP)
+		Kod został podzielony na mniejsze klasy i metody, co pozwala uniknąć zbyt dużych, uniwersalnych interfejsów.
+		Osobny podział na strony.
+
+    Dependency Inversion Principle (DIP)
+		Klasa UserData korzysta z abstrakcyjnego połączenia z bazą danych (PDO), co pozwala na łatwą zmianę źródła danych.
+		Jeżeli zmienia się źródło danych, wystarczy zaprowadzić zmiany w jedynie jednej bazie.
+
+
+
+
+
+
+Struktura Bazy Danych
+
+Baza danych składa się z dwóch głównych tabel i jednej pomocniczej:
+
+    users
+    Przechowuje dane użytkowników:
+        id – unikalny identyfikator.
+        name – imię użytkownika.
+        password – hasło użytkownika (zaszyfrowane).
+        role – rola użytkownika (1 = administrator, 2 = zwykły użytkownik).
+
+    user_documents_access
+    Przechowuje informacje o dostępie użytkowników do dokumentów:
+        user_id – identyfikator użytkownika (klucz obcy z tabeli users).
+        document_key – identyfikator dokumentu.
+		
+	form_submissions
+		Przechowuje informacje odnośnie już wypełnionych pól.
+        uniqueID – unikalny identyfikator.
+        userID – unikalny identyfikator użytkownika.
+        formName – identyfikator dokumentu.
+        formKey – identyfikator pola dokumentu.
+        formValue – Wartość (JSON).
+
+Relacje Między Tabelami
+
+    users jest powiązana z user_documents_access przez pole user_id.
+		Dzięki temu możliwe jest przypisanie dostępu do konkretnych dokumentów poszczególnym użytkownikom.
+    users jest powiązana z form_submissions przez pole userID.
+		Dzięki temu możliwe jest przypisanie dostępu do konkretnych pól poszczególnym użytkownikom oraz dokumentom.
+
+
+
+
+
+
+
+
+Jak Działa Logowanie
+
+    Użytkownik wprowadza swoje dane logowania (nazwa i hasło).
+    System sprawdza poprawność danych w tabeli users.
+    Po zalogowaniu:
+        Jeśli użytkownik ma rolę 1 (administrator), zostaje przekierowany do panelu administracyjnego.
+        Jeśli użytkownik ma rolę 2 (zwykły użytkownik), widzi listę dokumentów, do których ma dostęp.
+
+Logowanie opiera się na sesjach, co pozwala utrzymać stan zalogowania użytkownika przez czas trwania jego wizyty na stronie.
+
+
+
+
+
+
+
+
+

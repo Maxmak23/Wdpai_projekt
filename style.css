@@ -1,0 +1,69 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #444;
+}
+
+header p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+/* Document List */
+.document-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.document-list li {
+    margin: 10px 0;
+}
+
+.document-list a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #007BFF;
+    transition: color 0.3s;
+}
+
+.document-list a:hover {
+    color: #0056b3;
+}
+
+/* Selected Document */
+.selected-doc {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: #444;
+    text-align: center;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
