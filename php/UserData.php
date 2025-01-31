@@ -8,7 +8,7 @@ class UserData
     
     public static function Connect(){
         $host = 'localhost';
-        $dbname = 'wypelniarka_dokumentow2';
+        $dbname = 'wypelniarka_dokumentow3';
         $username = 'root';
         $password = '';
         try {
@@ -19,34 +19,36 @@ class UserData
         }
     }
     
-    public static function Login(){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $inputName = $_POST['name'] ?? '';
-            $inputPassword = $_POST['password'] ?? '';
+    public static function Login($Relocate=true){
+        $inputName = $_POST['name'] ?? '';
+        $inputPassword = $_POST['password'] ?? '';
 
-            $stmt = UserData::$PDO->prepare("SELECT * FROM users WHERE name = ? AND password = ?");
-            $stmt->execute([$inputName, $inputPassword]);
+        $stmt = UserData::$PDO->prepare("SELECT * FROM users WHERE name = ? AND password = ?");
+        $stmt->execute([$inputName, $inputPassword]);
 
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['name'];
-                $_SESSION['user_role'] = $user['role'];
+        if ($user) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_role'] = $user['role'];
+            if($Relocate){
                 header("Location: index.php");
                 exit;
-            } else {
-                $error = "Invalid username or password.";
-                return $error;
             }
+        } else {
+            $error = "Invalid username or password.";
+            return $error;
         }
     }
     
-    public static function Logout(){
+    public static function Logout($Relocate=true){
         if (isset($_GET['logout'])) {
-            session_destroy();
-            header("Location: index.php");
-            exit;
+            if($Relocate){
+                session_destroy();
+                header("Location: index.php");
+                exit;
+            }
         }
     }
 
@@ -80,7 +82,7 @@ class UserData
     public static function SaveAllFormValues($formFiller, $Post = []) {
         if (!isset($_SESSION['user_id'])) { return; } //tylko dla zalogowanych
 
-        $userID = $_SESSION['user_id'];
+        $user_id = $_SESSION['user_id'];
         foreach ($formFiller->fields as $Field) {
             $formKey = $Field->GetFieldKey();
             if (isset($Post[$formKey])) {
@@ -90,10 +92,10 @@ class UserData
                 $stmt = UserData::$PDO->prepare("
                     SELECT 1 
                     FROM form_submissions 
-                    WHERE userID = :userID AND formName = :formName AND formKey = :formKey
+                    WHERE user_id = :user_id AND formName = :formName AND formKey = :formKey
                 ");
                 $stmt->execute([
-                    ':userID' => $userID,
+                    ':user_id' => $user_id,
                     ':formName' => $formName,
                     ':formKey' => $formKey
                 ]);
@@ -103,22 +105,22 @@ class UserData
                     $updateStmt = UserData::$PDO->prepare("
                         UPDATE form_submissions
                         SET formValue = :formValue
-                        WHERE userID = :userID AND formName = :formName AND formKey = :formKey
+                        WHERE user_id = :user_id AND formName = :formName AND formKey = :formKey
                     ");
                     $updateStmt->execute([
                         ':formValue' => $formValue,
-                        ':userID' => $userID,
+                        ':user_id' => $user_id,
                         ':formName' => $formName,
                         ':formKey' => $formKey
                     ]);
                 } else {
                     // Insert
                     $insertStmt = UserData::$PDO->prepare("
-                        INSERT INTO form_submissions (userID, formName, formKey, formValue)
-                        VALUES (:userID, :formName, :formKey, :formValue)
+                        INSERT INTO form_submissions (user_id, formName, formKey, formValue)
+                        VALUES (:user_id, :formName, :formKey, :formValue)
                     ");
                     $insertStmt->execute([
-                        ':userID' => $userID,
+                        ':user_id' => $user_id,
                         ':formName' => $formName,
                         ':formKey' => $formKey,
                         ':formValue' => $formValue
@@ -127,10 +129,6 @@ class UserData
             }
         }
     }
-
-    
-    
-    
 }
 
 ?>

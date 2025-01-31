@@ -93,10 +93,10 @@ class FormFiller{
         $stmt = UserData::$PDO->prepare("
             SELECT * 
             FROM form_submissions 
-            WHERE userID = :userID AND formName = :formName
+            WHERE user_id = :user_id AND formName = :formName
         ");
         $stmt->execute([
-            ':userID' => $_SESSION['user_id']*1,
+            ':user_id' => $_SESSION['user_id']*1,
             ':formName' => $this->name,
         ]);
         

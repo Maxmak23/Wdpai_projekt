@@ -54,7 +54,7 @@ class FormField_Text extends FormField
     public function drawForm($Post=[]){
         if(!$this->showInForm){ return ''; }
         //$Input_Val = isset($Post[$this->GetFieldKey()]) ? $Post[$this->GetFieldKey()] : $this->defaultValue;
-        $Input_Style = 'width:100%;';
+        $Input_Style = '';
         
         
         $str = '';
