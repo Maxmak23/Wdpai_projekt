@@ -1,9 +1,17 @@
-Opis Strony
+### Opis Strony
 Strona internetowa umożliwia użytkownikom zarządzanie dostępem do dokumentów oraz ich przeglądanie w zależności od przydzielonych uprawnień. Administrator ma możliwość przypisywania lub odbierania dostępu do dokumentów dla poszczególnych użytkowników poprzez panel administracyjny. Zwykli użytkownicy mogą przeglądać jedynie dokumenty, do których mają dostęp.
 
+### Wygląd
+Po wprowadzeniu zmian w wyglądzie finalna wersja różni się od wersji planowanej w widokach na początku projektu zostały zaproponowane inne kolory pól jak również styl czcionki. Zmiany nie wpłyneły jednak na planowany układ stron.
+![1](image.png)
+![2](image-1.png)
+![3](image-2.png)
+![4](image-3.png)
+![5](image-4.png)
+![6](image-5.png)
+![7](image-6.png)
 
-
-Zasady Programowania SOLID
+### Zasady Programowania SOLID
 Strona została zaprojektowana zgodnie z zasadami SOLID, co zapewnia przejrzystość, łatwość rozbudowy i utrzymania kodu:
 
     Single Responsibility Principle (SRP)
@@ -30,7 +38,7 @@ Strona została zaprojektowana zgodnie z zasadami SOLID, co zapewnia przejrzysto
 
 
 
-Struktura Bazy Danych
+### Struktura Bazy Danych
 
 Baza danych składa się z dwóch głównych tabel i jednej pomocniczej:
 
@@ -58,7 +66,7 @@ Relacje Między Tabelami
 
 
 
-Jak Działa Logowanie
+### Jak Działa Logowanie
 
     Użytkownik wprowadza swoje dane logowania (nazwa i hasło).
     System sprawdza poprawność danych w tabeli users.
@@ -68,7 +76,7 @@ Jak Działa Logowanie
 
 Logowanie opiera się na sesjach, co pozwala utrzymać stan zalogowania użytkownika przez czas trwania jego wizyty na stronie.
 
-
+### Uruchamianie
 W celu uruchomienia projektu należy:
 - Wszystkie pliki wlożyć do folderu który znajduje się na serwerze php.
 - Stworzyć bazę danych "wypelniarka_dokumentow3"
@@ -77,7 +85,7 @@ W celu uruchomienia projektu należy:
 
 
 
-Testy
+### Testy
     Test logowania zwykłego użytkownika
         Loguje użytkownika „Adam” (rola 2).
         Test przechodzi, jeśli sesja zawiera poprawne dane użytkownika.
