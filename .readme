@@ -69,6 +69,12 @@ Jak Działa Logowanie
 Logowanie opiera się na sesjach, co pozwala utrzymać stan zalogowania użytkownika przez czas trwania jego wizyty na stronie.
 
 
+W celu uruchomienia projektu należy:
+- Wszystkie pliki wlożyć do folderu który znajduje się na serwerze php.
+- Stworzyć bazę danych "wypelniarka_dokumentow3"
+- Wykonać na tej bazie wszystkie polecenia MySQL z pliku wypelniarka_dokumentow.sql
+- Jeżeli wymaga tego baza, zmienić dane do logowania w pliku "php/UserData.php" w konstruktorze klasy.
+
 
 
 Testy
